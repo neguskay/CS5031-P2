@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="restful">
+    <output-path>$PROJECT_DIR$/out/artifacts/restful</output-path>
+    <root id="root" />
+  </artifact>
+</component>
