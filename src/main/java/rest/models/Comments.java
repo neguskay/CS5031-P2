@@ -1,6 +1,8 @@
 package rest.models;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Comments {
 
@@ -9,8 +11,25 @@ public class Comments {
   ArrayList<String> replyID;
   ArrayList<String> replies;
 
-  public Comments(){
-    this.comments = new ArrayList<>();
+  private LinkedList<Replies>commentReplies = new LinkedList<>();
+
+  private String comment;
+
+  private int upVotes,downVotes;
+
+  private Timestamp commentTimestamp;
+
+  public Comments(String photoComment, LinkedList<Replies> commentReplies, Timestamp commentTimestamp, int upVotes, int downVotes){
+    this.comment = photoComment;
+    this.commentReplies = commentReplies;
+    this.commentTimestamp = commentTimestamp;
+    this.upVotes = upVotes;
+    this.downVotes = downVotes;
+
+
+  }
+
+  private void initComments() {
 
   }
 

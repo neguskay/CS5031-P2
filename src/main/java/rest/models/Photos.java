@@ -5,34 +5,26 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Photos {
 
   BufferedImage photo;
   String photoID;
-  ArrayList<String> photoComments;
 
-  Comments comments;
+  LinkedList<Comments> photoComments;
 
-
-  public Photos(String photoID){
+  public Photos(String photoID, LinkedList<Comments> photoComments){
     this.photoID = photoID;
     this.photo = getImage(photoID);
+    this.photoComments = photoComments;
 
-    this.comments = new Comments();
-
-    photoComments = comments.getComments(photoID);
   }
 
 
-  public ArrayList<String> getComments(String photoID){
-
-
-    return comments.getComments(photoID);
+  public String getPhotoID() {
+    return photoID;
   }
-
-
-
 
   public BufferedImage getImage(String photoID){
 

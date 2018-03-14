@@ -1,12 +1,16 @@
 package rest.models;
 
 
-public class Users {
-  String userID,userPassword;
+import java.util.LinkedList;
 
-  public Users(){
-    this.userID = getUserID();
+public class Users {
+  private String userID,userPassword;
+  private LinkedList<Photos> userPhotos;
+
+  public Users(String id, String pw, LinkedList<Photos> userPhotos){
+    this.userID = id;
     this.userPassword = getUserPassword();
+    this.userPhotos = userPhotos;
   }
 
   public String getUserPassword() {
@@ -15,8 +19,14 @@ public class Users {
   }
 
   public String getUserID(){
-
     return "soo";
+  }
+
+  public boolean isPassAuthentic(String userPassword){
+    if (this.userPassword==userPassword ){
+      return true;
+
+    }else return false;
   }
 
 }

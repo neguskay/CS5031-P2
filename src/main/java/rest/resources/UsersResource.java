@@ -10,14 +10,12 @@ import javax.ws.rs.core.MediaType;
 
 @Path("hello")
 public class UsersResource {
-
+  Gson gson = new Gson();
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   public String getMessage(){
 
-    Gson gson = new Gson();
-
-    return gson.toJson("Hello");
+    return gson.toJson("Hello Sidney");
   }
 }
