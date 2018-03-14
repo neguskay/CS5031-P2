@@ -7,14 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Photos {
+public class Photo {
 
   BufferedImage photo;
   String photoID;
 
-  LinkedList<Comments> photoComments;
+  LinkedList<Comment> photoComments;
 
-  public Photos(String photoID, LinkedList<Comments> photoComments){
+  public Photo(String photoID, LinkedList<Comment> photoComments){
     this.photoID = photoID;
     this.photo = getImage(photoID);
     this.photoComments = photoComments;

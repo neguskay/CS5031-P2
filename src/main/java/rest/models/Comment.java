@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Comments {
+public class Comment {
 
   ArrayList<String> commentID;
   ArrayList<String> comments;
   ArrayList<String> replyID;
   ArrayList<String> replies;
 
-  private LinkedList<Replies>commentReplies = new LinkedList<>();
+  private LinkedList<Reply>commentReplies = new LinkedList<>();
 
   private String comment;
 
@@ -19,7 +19,7 @@ public class Comments {
 
   private Timestamp commentTimestamp;
 
-  public Comments(String photoComment, LinkedList<Replies> commentReplies, Timestamp commentTimestamp, int upVotes, int downVotes){
+  public Comment(String photoComment, LinkedList<Reply> commentReplies, Timestamp commentTimestamp, int upVotes, int downVotes){
     this.comment = photoComment;
     this.commentReplies = commentReplies;
     this.commentTimestamp = commentTimestamp;
