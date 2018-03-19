@@ -1,6 +1,8 @@
 package rest.resources;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
@@ -21,13 +23,18 @@ public class RepliesResource {
   Reply reply2;
   Reply reply3;
 
+  int replyNotifications = 0;
+
   /**
    * RepliesResource class constructor.
    */
   public RepliesResource() {
     this.reply1 = new Reply("trash photo", new Timestamp(System.currentTimeMillis()), 5, 1);
+    replyNotifications += 1;
     this.reply2 = new Reply("great photo", new Timestamp(System.currentTimeMillis()), 3, 8);
+    replyNotifications += 1;
     this.reply3 = new Reply("pretty photo", new Timestamp(System.currentTimeMillis()), 4, 2);
+    replyNotifications += 1;
   }
 
   public Reply getReply1() {

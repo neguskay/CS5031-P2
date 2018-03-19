@@ -94,6 +94,7 @@ public class PhotosResource {
             currentPhoto = currentPhotoList.get(j);
           currentPhoto.getPhotoComments().add(new Comment(comment, null,
             new Timestamp(System.currentTimeMillis()), 0, 0));
+          comments.commentNotifications+=1;
           System.out.println(currentPhoto.getPhotoComments().toString());
         }
       }
@@ -121,6 +122,9 @@ public class PhotosResource {
         LinkedList<Photo> photoList = photoDatabase.get(i);
         if(photoList.get(j).getPhotoId() == photoid ){
           returnComments =  gson.toJson(photoList.element().getPhotoComments());
+          if(comments.commentNotifications>0){
+            comments.commentNotifications -=1;
+          }
         }
         else{
           System.out.println("Couldn't find the Photo");

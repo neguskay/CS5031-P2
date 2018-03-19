@@ -1,13 +1,13 @@
 package rest.resources;
 
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AdminResourceTest {
-  AdminResource adminResource = new AdminResource();
-
+  private AdminResource adminResource = new AdminResource();
+  private CommentsResource commentsResource = new CommentsResource();
   /**
    * Tests for:
    * Valid admin name and valid password combination
@@ -33,6 +33,13 @@ class AdminResourceTest {
     if(!adminResource.isAdminValid(null, null)) {
       assert true;
     }
+  }
+  @Test
+  void deleteComments(){
+    String deletecomment = "Deleted Comment";
+    adminResource.deleteComment("comm 1");
+    System.out.println(commentsResource.comment1.getComment());
+    assertEquals(deletecomment, commentsResource.comment1.getComment());
   }
 
 }

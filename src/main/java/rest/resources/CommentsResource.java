@@ -23,6 +23,8 @@ public class CommentsResource {
   Comment comment3;
   Comment newcomment;
 
+  int commentNotifications = 0;
+
   Gson gson = new Gson();
 
   LinkedList<Reply> comment1Replies = new LinkedList<>();
@@ -53,8 +55,11 @@ public class CommentsResource {
 
     this.commentDatabase = new LinkedList<>();
     this.commentDatabase.add(comment1);
+    commentNotifications += 1;
     this.commentDatabase.add(comment2);
+    commentNotifications += 1;
     this.commentDatabase.add(comment3);
+    commentNotifications += 1;
 
   }
 
@@ -97,6 +102,7 @@ public class CommentsResource {
     //System.out.println(commentindex + "lol" + reply);
     if((0<=commentindex)&&(commentindex<commentDatabase.size())) {
       commentDatabase.get(commentindex).getReplies().add(new Reply(reply, new Timestamp(System.currentTimeMillis()), 0, 0));
+      replies.replyNotifications += 1;
     }
     else {
       System.out.println("Comment " + commentindex + " does not exits");
@@ -120,7 +126,10 @@ public class CommentsResource {
       if(commentDatabase.get(i).getComment()==comment){
         searchComment = commentDatabase.element();
         returnReplies = searchComment.getReplies();
+        if (replies.replyNotifications>0){
+          replies.replyNotifications-=1; //Notifications implemention
         }
+      }
       else{
         System.out.println("Could not find replies");
       }

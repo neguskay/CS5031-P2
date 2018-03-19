@@ -1,10 +1,14 @@
 package rest.resources;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
 import rest.models.Admin;
+import rest.models.Comment;
 import rest.models.Photo;
 
 
@@ -13,7 +17,12 @@ import rest.models.Photo;
  * Holds all Admin user type resources.
  */
 @Path("/adminlogin")
+@Singleton
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class AdminResource {
+
+  Gson gson = new Gson();
 
   private Admin admin1;
   private Admin admin2;
@@ -21,17 +30,18 @@ public class AdminResource {
 
   private LinkedList adminPhotoDatabase;
   private LinkedList<Admin> adminUsers;
-  private PhotosResource photosResource = new PhotosResource();
+  private PhotosResource photosResource;
+
+  CommentsResource commentsResource;
 
   /**
    * Admin User Constructor.
    */
   public AdminResource() {
+    this.photosResource = new PhotosResource();
+    this.commentsResource = new CommentsResource();
     initAdminPhotosDatabase();
-
     initAdminUsers();
-
-
   }
 
   private void initAdminUsers() {
@@ -46,7 +56,8 @@ public class AdminResource {
    * Initiates Admin 1.
    */
   private void initAdmin1() {
-    this.admin1 = new Admin("ad1", "pw1", null, 6,adminPhotoDatabase);
+    this.admin1 =
+      new Admin("ad1", "pw1", null, 6,adminPhotoDatabase);
   }
 
   /**
@@ -63,6 +74,18 @@ public class AdminResource {
     adminPhotoDatabase = new LinkedList<>();
     adminPhotoDatabase.add(photosResource.getUser1photos());
     adminPhotoDatabase.add(photosResource.getUser2photos());
+  }
+
+  @Path("/delete/{comment}")
+  public String deleteComment(@PathParam("comment") String comment){
+    Comment deleteComment = null;
+    for (int i = 0; i < commentsResource.commentDatabase.size(); i++) {
+      if(commentsResource.commentDatabase.get(i).getComment() == comment){
+        deleteComment = commentsResource.commentDatabase.get(i);
+        deleteComment.getComment().replaceAll(deleteComment.getComment(), "Deleted Comment");
+      }
+    }
+    return gson.toJson(deleteComment);
   }
 
   /**
@@ -93,5 +116,7 @@ public class AdminResource {
     }
     return isValidAdmin;
   }
+
+
 
 }

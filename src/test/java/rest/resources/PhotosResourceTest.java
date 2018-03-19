@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PhotosResourceTest {
   PhotosResource photosResource = new PhotosResource();
 
+
   @Test
   void postCommentTest() {
     System.out.println(photosResource.getPhotoDatabase().toString());
