@@ -111,5 +111,21 @@ public class CommentsResource {
     gson.toJson("Test Comments");
   }
 
+  @GET
+  @Path("{comment}/getreplies")
+  public String getCommentReplies(@PathParam("comment") String comment){
+    Comment searchComment;
+    LinkedList<Reply> returnReplies = new LinkedList<>();
+    for (int i = 0; i < commentDatabase.size(); i++) {
+      if(commentDatabase.get(i).getComment()==comment){
+        searchComment = commentDatabase.element();
+        returnReplies = searchComment.getReplies();
+        }
+      else{
+        System.out.println("Could not find replies");
+      }
+    }
+    return gson.toJson(returnReplies);
+  }
 }
 
