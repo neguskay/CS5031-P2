@@ -1,28 +1,47 @@
 package rest.resources;
 
 import com.google.gson.Gson;
+import rest.models.Photo;
 import rest.models.User;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Singleton;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
 
-@Path("hello")
+@Path("/users")
+@Singleton
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
 public class UsersResource {
   Gson gson = new Gson();
+  PhotosResource photos = new PhotosResource();
+  private String newUserName, newUserPassword;
 
   String user1ID, user1Password;
-  User user1;
+  User user1,user2;
   public UsersResource () {
     user1ID = "soo";
     user1Password = "1234";
-    user1 = new User(user1ID, user1Password, null);
+    user1 = new User(user1ID, user1Password, new LinkedList<Photo>());
+    user2 = new User("see", "1111", photos.getUser2photos());
   }
-  @POST
-  @Produces(MediaType.APPLICATION_JSON)
-  public String getMessage(){
+  @GET
+  @Path("{id}")
+  public String getMessage(@PathParam("id") String id){
+    Object object = new Object();
+    switch (id.toLowerCase()) {
+      case "1": object = user1;
+      break;
+      case "2": object = user2;
+      break;
+      default: object =  "ID: "+id+" not supported.";
+      break;
+    }
+    return gson.toJson(object);
+  }
 
-    return gson.toJson(user1);
-  }
+  /*@POST
+  @Path("{username}", "{password}")*/
+
 }

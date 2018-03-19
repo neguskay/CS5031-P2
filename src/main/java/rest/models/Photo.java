@@ -35,7 +35,7 @@ public class Photo {
 
     //read image - Change path name
     try{
-      f = new File("D:\\Image\\Taj.jpg"); //image file path
+      f = new File("/cs/home/soo3/IdeaProjects/CS5031/P2/restful/src/main/java/rest/resources/photos/1.jpeg"); //image file path
       image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       image = ImageIO.read(f);
 

@@ -1,31 +1,34 @@
-package rest.controller;
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import rest.models.Photo;
+import rest.models.Photogram;
 import rest.models.User;
+import rest.resources.PhotosResource;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.LinkedList;
 
 
-@Path("/login")
-public class PhotogramController {
+@ApplicationPath("/photogram")
+public class PhotogramApp extends Application{
+  Photo photo;
   Gson gson = new Gson();
   GsonBuilder gsonBuilder = new GsonBuilder();
 
+  Photogram model = new Photogram("sam", "1122");
+
   User currentUser;
   LinkedList<Photo> userPhotos;
-  public PhotogramController(){
+  public PhotogramApp(){
 
   }
 
-  @GET
+  /*@GET
   @Path("/{userID}")
   @Produces(MediaType.APPLICATION_JSON)
   public  void retrieveUser(@PathParam("userID") String userID) throws IOException {
@@ -40,7 +43,7 @@ public class PhotogramController {
       }
 
     }
-  }
+  }*/
 
 
 

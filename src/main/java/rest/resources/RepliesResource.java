@@ -2,8 +2,16 @@ package rest.resources;
 
 import rest.models.Reply;
 
+import javax.inject.Singleton;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
-
+@Path("/replies")
+@Singleton
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class RepliesResource {
 
   Reply reply1, reply2,reply3;

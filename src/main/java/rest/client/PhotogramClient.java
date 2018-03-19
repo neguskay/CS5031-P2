@@ -1,13 +1,23 @@
-package client;
+package rest.client;
 
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import rest.resources.UsersResource;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class PhotogramClient {
   public static void main(String[] args){
-    System.out.println("This is client");
+    Client client = ClientBuilder.newClient();
+
+    Response response= client.target("http://localhost:8080/photogram/users").request(MediaType.APPLICATION_JSON).get();
+    //UsersResource resource = response.readEntity(UsersResource.class);
+    System.out.println(response);
+
+  }
+    /*System.out.println("This is client");
     try {
       Client client = Client.create();
 
@@ -32,5 +42,5 @@ public class PhotogramClient {
 
     }
 
-  }
+  }*/
 }

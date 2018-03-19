@@ -1,8 +1,10 @@
 package rest.models;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+@XmlRootElement
 public class Reply {
   String reply;
 

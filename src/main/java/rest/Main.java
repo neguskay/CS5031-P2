@@ -1,14 +1,21 @@
 package rest;
 
+import com.google.gson.Gson;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.URI;
 
 public class Main {
-  public static final String BASE_URI = "http://localhost:8080/photogram/";
+  Gson gson = new Gson();
+  public static final String BASE_URI = "http://localhost:8080/photogram/"; //photogram/
 
   public static HttpServer startServer() {
     // create a resource config that scans for JAX-RS resources and providers
@@ -25,5 +32,11 @@ public class Main {
       + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
     System.in.read();
     server.stop();
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public String getPhoto(){
+    return gson.toJson("Type a getter/poster");
   }
 }
