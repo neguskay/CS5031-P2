@@ -1,16 +1,14 @@
 package rest.resources;
 
+import com.google.gson.Gson;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import com.google.gson.Gson;
 import rest.models.Comment;
 import rest.models.Photo;
-
 
 /**
  * PhotoResource Class which contains all resources of Photos.
@@ -83,18 +81,25 @@ public class PhotosResource {
     return user2photos;
   }
 
+  /**
+   * Posts a comment with a given photoid and the comment String.
+   * @param photoid id of the photo
+   * @param comment comment to be posted
+   * @return Json string object
+   */
   @POST
   @Path("{photoid}/postcomment/")
-  public String postComment(@PathParam("photoid") String photoid, @QueryParam("comment") String comment) {
-    if(!(comment == null)) {
+  public String postComment(@PathParam("photoid") String photoid,
+                            @QueryParam("comment") String comment) {
+    if (!(comment == null)) {
       for (int i = 0; i < photoDatabase.size(); i++) {
         LinkedList<Photo> currentPhotoList = photoDatabase.get(i);
         for (int j = 0; j < photoDatabase.get(i).size(); j++) {
-          if (photoid.toLowerCase() == currentPhotoList.get(j).getPhotoId())
+          if ((photoid.toLowerCase() == currentPhotoList.get(j).getPhotoId()))
             currentPhoto = currentPhotoList.get(j);
           currentPhoto.getPhotoComments().add(new Comment(comment, null,
-            new Timestamp(System.currentTimeMillis()), 0, 0));
-          comments.commentNotifications+=1;
+              new Timestamp(System.currentTimeMillis()), 0, 0));
+          comments.commentNotifications += 1;
           System.out.println(currentPhoto.getPhotoComments().toString());
         }
       }
@@ -111,22 +116,26 @@ public class PhotosResource {
     this.comments = comments;
   }
 
+  /**
+   * Retrieves all comments from a given user's photo.
+   * @param photoid photo ID
+   * @return Json object as a list of comments
+   */
   @GET
   @Path("{photoid}/getusercomments")
-  public String getUserComments(@PathParam("photoid") String photoid){
+  public String getUserComments(@PathParam("photoid") String photoid) {
     String returnComments = "";
     //int photoIndex = photoDatabase.indexOf(photoid);
     LinkedList<Comment> currentPhotoComments  = new LinkedList<>();
-    for (int i = 0; i <photoDatabase.size() ; i++) {
-      for (int j = 0; j <photoDatabase.get(i).size() ; j++) {
+    for (int i = 0; i < photoDatabase.size(); i++) {
+      for (int j = 0; j < photoDatabase.get(i).size(); j++) {
         LinkedList<Photo> photoList = photoDatabase.get(i);
-        if(photoList.get(j).getPhotoId() == photoid ){
+        if (photoList.get(j).getPhotoId() == photoid) {
           returnComments =  gson.toJson(photoList.element().getPhotoComments());
-          if(comments.commentNotifications>0){
-            comments.commentNotifications -=1;
+          if (comments.commentNotifications > 0) {
+            comments.commentNotifications -= 1;
           }
-        }
-        else{
+        } else {
           System.out.println("Couldn't find the Photo");
         }
       }

@@ -1,12 +1,11 @@
 package rest.resources;
 
+import com.google.gson.Gson;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import com.google.gson.Gson;
 import rest.models.Admin;
 import rest.models.Comment;
 import rest.models.Photo;
@@ -47,7 +46,7 @@ public class AdminResource {
   private void initAdminUsers() {
     initAdmin1();
     initAdmin2();
-    this.adminUsers=  new LinkedList<>();
+    this.adminUsers =  new LinkedList<>();
     this.adminUsers.add(admin1);
     this.adminUsers.add(admin2);
   }
@@ -76,11 +75,16 @@ public class AdminResource {
     adminPhotoDatabase.add(photosResource.getUser2photos());
   }
 
+  /**
+   * Admin control: deletes a comments.
+   * @param comment comment
+   * @return replacement string
+   */
   @Path("/delete/{comment}")
-  public String deleteComment(@PathParam("comment") String comment){
+  public String deleteComment(@PathParam("comment") String comment) {
     Comment deleteComment = null;
     for (int i = 0; i < commentsResource.commentDatabase.size(); i++) {
-      if(commentsResource.commentDatabase.get(i).getComment() == comment){
+      if (commentsResource.commentDatabase.get(i).getComment() == comment) {
         deleteComment = commentsResource.commentDatabase.get(i);
         deleteComment.getComment().replaceAll(deleteComment.getComment(), "Deleted Comment");
       }
@@ -97,18 +101,18 @@ public class AdminResource {
   @Path("{adminId}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean isAdminValid(@PathParam("adminId") String adminId, @QueryParam("pw") String adminPass) {
+  public boolean isAdminValid(@PathParam("adminId") String adminId,
+                              @QueryParam("pw") String adminPass) {
     boolean isValidAdmin = false;
-    for(int i = 0; i<adminUsers.size(); i++){
-      if (adminUsers.get(i).getUserid()==adminId){
+    for (int i = 0; i < adminUsers.size(); i++) {
+      if (adminUsers.get(i).getUserid() == adminId) {
         this.currentAdmin = adminUsers.get(i);
         System.out.println("Found Admin Name");
-        if (adminUsers.get(i).getUserPassword()==adminPass){
+        if (adminUsers.get(i).getUserPassword() == adminPass) {
           System.out.println("Admin Login Verified: Welcome " + adminUsers.get(i).getUserid());
           //Log User In
           isValidAdmin = true;
-        }
-        else {
+        } else {
           System.out.println("User couldn't be verified at this time");
           isValidAdmin = false;
         }

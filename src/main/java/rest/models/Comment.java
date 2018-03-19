@@ -60,7 +60,7 @@ public class Comment {
     return this.commentReplies;
   }
 
-  public Reply addReplies(String reply, Timestamp timestamp,int upvotes, int downVotes){
+  public Reply addReplies(String reply, Timestamp timestamp,int upvotes, int downVotes) {
     return new Reply(reply, timestamp, upVotes, downVotes);
   }
 

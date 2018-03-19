@@ -31,13 +31,13 @@ public class UsersResource {
   private User currentUser;
 
   private LinkedList<User> users;
+
   /**
    * UserResource Constructor.
    */
   public UsersResource() {
     this.gson = new Gson();
     this.photoResource = new PhotosResource();
-
 
     initUsers();
   }
@@ -83,18 +83,18 @@ public class UsersResource {
   @Path("{userId}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean isUserValid(@PathParam("userId") String userId, @QueryParam("pw") String userPass) {
+  public boolean isUserValid(@PathParam("userId") String userId,
+                             @QueryParam("pw") String userPass) {
     boolean isValidUser = false;
-    for(int i = 0; i<users.size(); i++){
-      if (users.get(i).getUserid()==userId){
+    for (int i = 0; i < users.size(); i++) {
+      if (users.get(i).getUserid() == userId) {
         this.currentUser = users.get(i);
         System.out.println("Found User's Name");
-        if (users.get(i).getUserPassword()==userPass){
+        if (users.get(i).getUserPassword() == userPass) {
           System.out.println("User Login Verified: Welcome " + users.get(i).getUserid());
           //Log User In
           isValidUser = true;
-        }
-        else {
+        } else {
           System.out.println("User couldn't be verified at this time");
           isValidUser = false;
         }
@@ -102,13 +102,20 @@ public class UsersResource {
     }
     return isValidUser;
   }
+
+  /**
+   * Retrieves all comments of a given user.
+   * @param userId user's ID/login
+   * @return user's comments as  jSON object string
+   */
   @GET
   @Path("{userId}/getusercomments")
-  public String getUserComments(@PathParam("userId") String userId){
+  public String getUserComments(@PathParam("userId") String userId) {
     int userIndex = users.indexOf(userId);
-    LinkedList<Comment> currentUserComments  = new LinkedList<>();
-    for (int i = 0; i <users.get(userIndex).getUserPhotos().size() ; i++) {
-      currentUserComments.add(users.get(userIndex).getUserPhotos().get(1).getPhotoComments().get(i));
+    LinkedList<Comment> currentUserComments = new LinkedList<>();
+    for (int i = 0; i < users.get(userIndex).getUserPhotos().size(); i++) {
+      currentUserComments.add(
+          users.get(userIndex).getUserPhotos().get(1).getPhotoComments().get(i));
     }
     return gson.toJson(currentUserComments);
   }

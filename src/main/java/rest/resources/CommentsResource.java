@@ -97,14 +97,15 @@ public class CommentsResource {
    */
   @POST
   @Path("/replytocomment")
-  public String replyToComment(@HeaderParam("{commentindex},{reply}") int commentindex, String reply) {
+  public String replyToComment(@HeaderParam("{commentindex},{reply}")
+                                   int commentindex, String reply) {
     Object returnObject  = new Object();
     //System.out.println(commentindex + "lol" + reply);
-    if((0<=commentindex)&&(commentindex<commentDatabase.size())) {
-      commentDatabase.get(commentindex).getReplies().add(new Reply(reply, new Timestamp(System.currentTimeMillis()), 0, 0));
+    if ((0 <= commentindex) && (commentindex < commentDatabase.size())) {
+      commentDatabase.get(commentindex).getReplies().add(new Reply(reply,
+          new Timestamp(System.currentTimeMillis()), 0, 0));
       replies.replyNotifications += 1;
-    }
-    else {
+    } else {
       System.out.println("Comment " + commentindex + " does not exits");
     }
     System.out.println(commentDatabase.get(commentindex).getReplies().getLast().getReply());
@@ -112,25 +113,24 @@ public class CommentsResource {
     return commentDatabase.get(commentindex).getReplies().getLast().getReply();
   }
 
-  @POST
-  public void tryThis() {
-    gson.toJson("Test Comments");
-  }
-
+  /**
+   * Retrieves all the replies of a given comment.
+   * @param comment comment being looked up
+   * @return list of replies in String form
+   */
   @GET
   @Path("{comment}/getreplies")
-  public String getCommentReplies(@PathParam("comment") String comment){
+  public String getCommentReplies(@PathParam("comment") String comment) {
     Comment searchComment;
     LinkedList<Reply> returnReplies = new LinkedList<>();
     for (int i = 0; i < commentDatabase.size(); i++) {
-      if(commentDatabase.get(i).getComment()==comment){
+      if (commentDatabase.get(i).getComment() == comment) {
         searchComment = commentDatabase.element();
         returnReplies = searchComment.getReplies();
-        if (replies.replyNotifications>0){
-          replies.replyNotifications-=1; //Notifications implemention
+        if (replies.replyNotifications > 0) {
+          replies.replyNotifications -= 1; //Notifications implemention
         }
-      }
-      else{
+      } else {
         System.out.println("Could not find replies");
       }
     }
