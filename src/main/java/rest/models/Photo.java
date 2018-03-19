@@ -63,4 +63,15 @@ public class Photo {
     }
   }
 
+  public LinkedList<Comment> getPhotoComments() {
+    return photoComments;
+  }
+
+  public void setPhotoComments(LinkedList<Comment> photoComments) {
+    this.photoComments = photoComments;
+  }
+
+  public void addPhotoComment(Comment comment){
+    this.photoComments.add(comment);
+  }
 }

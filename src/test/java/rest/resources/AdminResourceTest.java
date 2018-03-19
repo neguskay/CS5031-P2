@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminUserResourceTest {
-  AdminUserResource adminUserResource = new AdminUserResource();
+class AdminResourceTest {
+  AdminResource adminResource = new AdminResource();
 
   /**
    * Tests for:
@@ -18,19 +18,19 @@ class AdminUserResourceTest {
   @Test
   void isAdminValid() {
     System.out.println("Test 1: Valid admin name and valid password combination");
-    if(adminUserResource.isAdminValid("ad1", "pw1")) {
+    if(adminResource.isAdminValid("ad1", "pw1")) {
       assert true;
     }
     System.out.println("Test 2: Valid admin name and invalid password combination");
-    if(!adminUserResource.isAdminValid("ad1", "p")) {
+    if(!adminResource.isAdminValid("ad1", "p")) {
       assert true;
     }
     System.out.println("Test 3: Invalid admin name and valid password combination");
-    if(!adminUserResource.isAdminValid("as", "p")) {
+    if(!adminResource.isAdminValid("as", "p")) {
       assert true;
     }
     System.out.println("Test 4: Null admin name and null password combinations");
-    if(!adminUserResource.isAdminValid(null, null)) {
+    if(!adminResource.isAdminValid(null, null)) {
       assert true;
     }
   }

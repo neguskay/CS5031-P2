@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import rest.models.Comment;
 import rest.models.Photo;
 import rest.models.User;
 
@@ -35,14 +37,13 @@ public class UsersResource {
   public UsersResource() {
     this.gson = new Gson();
     this.photoResource = new PhotosResource();
-    user1id = "soo";
-    user1password = "1234";
+
 
     initUsers();
   }
 
   private void initUsers() {
-    this.user1 = new User(user1id, user1password, new LinkedList<Photo>());
+    this.user1 = new User("soo", "1234", new LinkedList<Photo>());
     this.user2 = new User("see", "1111", photoResource.getUser2photos());
 
     users = new LinkedList<>();
@@ -100,5 +101,15 @@ public class UsersResource {
       }
     }
     return isValidUser;
+  }
+  @GET
+  @Path("{userId}/getusercomments")
+  public String getUserComments(@PathParam("userId") String userId){
+    int userIndex = users.indexOf(userId);
+    LinkedList<Comment> currentUserComments  = new LinkedList<>();
+    for (int i = 0; i <users.get(userIndex).getUserPhotos().size() ; i++) {
+      currentUserComments.add(users.get(userIndex).getUserPhotos().get(1).getPhotoComments().get(i));
+    }
+    return gson.toJson(currentUserComments);
   }
 }

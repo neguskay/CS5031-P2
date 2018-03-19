@@ -13,7 +13,7 @@ import rest.models.Photo;
  * Holds all Admin user type resources.
  */
 @Path("/adminlogin")
-public class AdminUserResource {
+public class AdminResource {
 
   private Admin admin1;
   private Admin admin2;
@@ -26,7 +26,7 @@ public class AdminUserResource {
   /**
    * Admin User Constructor.
    */
-  public AdminUserResource() {
+  public AdminResource() {
     initAdminPhotosDatabase();
 
     initAdminUsers();

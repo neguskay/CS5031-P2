@@ -54,12 +54,17 @@ public class Comment {
 
   /**
    * Parses comment ID returns List of replies.
-   * @param commentid unique id of comment
    * @return List of replies with associated comment
    */
-  public ArrayList<String> getReplies(String commentid) {
-    replies = new ArrayList<>();
-    return replies;
+  public LinkedList<Reply> getReplies() {
+    return this.commentReplies;
+  }
 
+  public Reply addReplies(String reply, Timestamp timestamp,int upvotes, int downVotes){
+    return new Reply(reply, timestamp, upVotes, downVotes);
+  }
+
+  public String getComment() {
+    return comment;
   }
 }

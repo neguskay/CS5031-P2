@@ -22,10 +22,12 @@ public class CommentsResource {
   Comment comment2;
   Comment comment3;
   Comment newcomment;
+
   Gson gson = new Gson();
 
   LinkedList<Reply> comment1Replies = new LinkedList<>();
   LinkedList<Reply> comment2Replies = new LinkedList<>();
+  LinkedList<Comment> commentDatabase;
 
   RepliesResource replies = new RepliesResource();
 
@@ -33,6 +35,10 @@ public class CommentsResource {
    * Comments Resource Class Constructor.
    */
   public CommentsResource() {
+    initComments();
+  }
+
+  private void initComments() {
 
     comment1Replies.add(replies.getReply1());
     comment1Replies.add(replies.getReply3());
@@ -44,6 +50,12 @@ public class CommentsResource {
       new Timestamp(System.currentTimeMillis()), 10,13);
     comment3 = new Comment("comm 3", comment1Replies,
       new Timestamp(System.currentTimeMillis()), 5,17);
+
+    this.commentDatabase = new LinkedList<>();
+    this.commentDatabase.add(comment1);
+    this.commentDatabase.add(comment2);
+    this.commentDatabase.add(comment3);
+
   }
 
   public Comment getComment1() {
@@ -75,26 +87,23 @@ public class CommentsResource {
 
   /**
    * Posts a reply to a comment.
-   * @param commentid Comment being replied to.
+   * @param commentindex Comment being replied to.
    * @return
    */
   @POST
   @Path("/replytocomment")
-  public String replyToComment(@HeaderParam("{commentid},{reply}") String commentid, String reply) {
+  public String replyToComment(@HeaderParam("{commentindex},{reply}") int commentindex, String reply) {
     Object returnObject  = new Object();
-    System.out.println(commentid + "lol" + reply);
-    switch (commentid.toLowerCase()) {
-      case "1": comment1Replies.add(new Reply(reply,
-          new Timestamp(System.currentTimeMillis()), 0,0));
-        return gson.toJson(comment1Replies);
-      case "2": comment2Replies.add(new Reply(reply,
-          new Timestamp(System.currentTimeMillis()), 0,0));
-        return gson.toJson(comment2Replies);
-      default: returnObject = "NO Comment: " + commentid
-        + "Reply=new Reply= was not posted";
-        return gson.toJson(returnObject);
+    //System.out.println(commentindex + "lol" + reply);
+    if((0<=commentindex)&&(commentindex<commentDatabase.size())) {
+      commentDatabase.get(commentindex).getReplies().add(new Reply(reply, new Timestamp(System.currentTimeMillis()), 0, 0));
     }
-
+    else {
+      System.out.println("Comment " + commentindex + " does not exits");
+    }
+    System.out.println(commentDatabase.get(commentindex).getReplies().getLast().getReply());
+    //return gson.toJson(commentDatabase.get(commentindex).getReplies());
+    return commentDatabase.get(commentindex).getReplies().getLast().getReply();
   }
 
   @POST

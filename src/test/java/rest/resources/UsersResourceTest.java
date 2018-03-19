@@ -2,7 +2,6 @@ package rest.resources;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class UsersResourceTest {
 
@@ -18,7 +17,6 @@ class UsersResourceTest {
   @Test
   void isUserValid() {
     System.out.println("Test 1: Valid user name and valid password combination");
-    System.out.println();
     if(usersResource.isUserValid("soo", "1234")) {
       assert true;
     }
@@ -37,7 +35,8 @@ class UsersResourceTest {
   }
 
   @Test
-  void getMessage() {
+  void postComment(){
+
   }
 
 }

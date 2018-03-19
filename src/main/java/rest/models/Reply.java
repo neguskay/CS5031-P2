@@ -30,4 +30,12 @@ public class Reply {
     this.upVotes = upVotes;
     this.downVotes = downVotes;
   }
+
+  public void setReply(String reply) {
+    this.reply = reply;
+  }
+
+  public String getReply() {
+    return reply;
+  }
 }

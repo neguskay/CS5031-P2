@@ -1,9 +1,13 @@
 package rest.resources;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
+import java.util.List;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import com.google.gson.Gson;
 import rest.models.Comment;
 import rest.models.Photo;
 
@@ -17,11 +21,12 @@ import rest.models.Photo;
 @Produces(MediaType.APPLICATION_JSON)
 public class PhotosResource {
   private CommentsResource comments;
+  private Gson gson;
 
   private Photo photo1;
   private Photo photo2;
   private Photo photo3;
-  private Photo photo4;
+  private Photo currentPhoto;
 
   private LinkedList<Comment> photo1Comment;
   private LinkedList<Comment> photo2Comment;
@@ -31,33 +36,43 @@ public class PhotosResource {
   private LinkedList<Photo> user1photos;
   private LinkedList<Photo> user2photos;
 
+  private LinkedList<LinkedList> photoDatabase;
+
   /**
    * PhotoResource Constructor.
    */
   public PhotosResource() {
-    comments = new CommentsResource();
+    gson = new Gson();
+    initPhotos();
+  }
 
-    user1photos = new LinkedList<>();
-    user2photos = new LinkedList<>();
+  private void initPhotos() {
+    this.comments = new CommentsResource();
 
-    photo1Comment = new LinkedList<>();
-    photo2Comment = new LinkedList<>();
-    photo3Comment = new LinkedList<>();
-    photo4Comment = new LinkedList<>();
+    this.user1photos = new LinkedList<>();
+    this.user2photos = new LinkedList<>();
 
-    photo1Comment.add(comments.getComment1());
-    photo2Comment.add(comments.getComment2());
-    photo3Comment.add(comments.getComment3());
-    photo4Comment.add(comments.getComment2());
+    this.photo1Comment = new LinkedList<>();
+    this.photo2Comment = new LinkedList<>();
+    this.photo3Comment = new LinkedList<>();
+    this.photo4Comment = new LinkedList<>();
 
-    photo1 = new Photo("1", photo1Comment);
-    photo2 = new Photo("2", photo2Comment);
-    photo3 = new Photo("2", photo3Comment);
+    this.photo1Comment.add(comments.getComment1());
+    this.photo2Comment.add(comments.getComment2());
+    this.photo3Comment.add(comments.getComment3());
+    this.photo4Comment.add(comments.getComment2());
 
-    user1photos.add(photo1);
-    user1photos.add(photo2);
-    user2photos.add(photo3);
+    this.photo1 = new Photo("1", photo1Comment);
+    this.photo2 = new Photo("2", photo2Comment);
+    this.photo3 = new Photo("2", photo3Comment);
 
+    this.user1photos.add(photo1);
+    this.user1photos.add(photo2);
+    this.user2photos.add(photo3);
+
+    this.photoDatabase = new LinkedList();
+    this.photoDatabase.add(user1photos);
+    this.photoDatabase.add(user2photos);
   }
 
   public LinkedList<Photo> getUser1photos() {
@@ -68,23 +83,51 @@ public class PhotosResource {
     return user2photos;
   }
 
-  /*public Photo addPhoto(String photoID){
-    Photo currentPhoto = new Photo(photoID, null);
-    photos.add(currentPhoto);
-    return currentPhoto;
+  @POST
+  @Path("{photoid}/postcomment/")
+  public String postComment(@PathParam("photoid") String photoid, @QueryParam("comment") String comment) {
+    if(!(comment == null)) {
+      for (int i = 0; i < photoDatabase.size(); i++) {
+        LinkedList<Photo> currentPhotoList = photoDatabase.get(i);
+        for (int j = 0; j < photoDatabase.get(i).size(); j++) {
+          if (photoid.toLowerCase() == currentPhotoList.get(j).getPhotoId())
+            currentPhoto = currentPhotoList.get(j);
+          currentPhoto.getPhotoComments().add(new Comment(comment, null,
+            new Timestamp(System.currentTimeMillis()), 0, 0));
+          System.out.println(currentPhoto.getPhotoComments().toString());
+        }
+      }
+    }
+    //return gson.toJson(currentPhoto.getPhotoComments());
+    return currentPhoto.getPhotoComments().getLast().getComment();
   }
 
-  public Photo getPhoto(String photoID) {
-    Photo retPhoto = null;
-    if(photos.contains(photoID)){
-      int retPhotoIndex = photos.indexOf(photoID);
-      retPhoto = photos.get(retPhotoIndex);
-    }
-    return retPhoto;
-  }*/
+  public LinkedList<LinkedList> getPhotoDatabase() {
+    return photoDatabase;
+  }
 
-  public CommentsResource getComments() {
-    return comments;
+  public void setComments(CommentsResource comments) {
+    this.comments = comments;
+  }
+
+  @GET
+  @Path("{photoid}/getusercomments")
+  public String getUserComments(@PathParam("photoid") String photoid){
+    String returnComments = "";
+    //int photoIndex = photoDatabase.indexOf(photoid);
+    LinkedList<Comment> currentPhotoComments  = new LinkedList<>();
+    for (int i = 0; i <photoDatabase.size() ; i++) {
+      for (int j = 0; j <photoDatabase.get(i).size() ; j++) {
+        LinkedList<Photo> photoList = photoDatabase.get(i);
+        if(photoList.get(j).getPhotoId() == photoid ){
+          returnComments =  gson.toJson(photoList.element().getPhotoComments());
+        }
+        else{
+          System.out.println("Couldn't find the Photo");
+        }
+      }
+    }
+    return returnComments;
   }
 
   public LinkedList<Comment> getPhoto1Comment() {
