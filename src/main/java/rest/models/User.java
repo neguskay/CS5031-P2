@@ -1,18 +1,29 @@
 package rest.models;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
+import javax.xml.bind.annotation.XmlRootElement;
 
+
+/**
+ * User Class.
+ */
 @XmlRootElement
 public class User {
 
-  private String userID,userPassword;
+  private String userid;
+  private String userPassword;
   private LinkedList<Photo> userPhotos;
 
-  public User(String id, String pw, LinkedList<Photo> userPhotos){
-      this.userID = id;
-      this.userPassword = pw;
-      this.userPhotos = userPhotos;
+  /**
+   * User Class Constructor.
+   * @param id User ID
+   * @param pw User's password
+   * @param userPhotos User's photos on account
+   */
+  public User(String id, String pw, LinkedList<Photo> userPhotos) {
+    this.userid = id;
+    this.userPassword = pw;
+    this.userPhotos = userPhotos;
   }
 
   public String getUserPassword() {
@@ -23,12 +34,12 @@ public class User {
     return userPhotos;
   }
 
-  public String getUserID() {
-    return userID;
+  public String getUserid() {
+    return userid;
   }
 
-  public void setUserID(String userID) {
-    this.userID = userID;
+  public void setUserid(String userid) {
+    this.userid = userid;
   }
 
   public void setUserPassword(String userPassword) {

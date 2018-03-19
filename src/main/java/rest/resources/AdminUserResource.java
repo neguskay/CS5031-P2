@@ -1,18 +1,28 @@
 package rest.resources;
 
+import java.util.LinkedList;
+import javax.ws.rs.Path;
 import rest.models.Admin;
 import rest.models.Photo;
 
-import java.util.LinkedList;
 
-public class AdminUserResource{
+/**
+ * Admin User Resources Class.
+ * Holds all Admin user type resources.
+ */
+@Path("/adminlogin")
+public class AdminUserResource {
 
-  Admin admin1, admin2;
+  private Admin admin1;
+  private Admin admin2;
 
-  LinkedList adminPhotoDatabase;
-  PhotosResource photosResource = new PhotosResource();
+  private LinkedList adminPhotoDatabase;
+  private PhotosResource photosResource = new PhotosResource();
 
-  public AdminUserResource(){
+  /**
+   * Admin User Constructor.
+   */
+  public AdminUserResource() {
     initAdminPhotosDatabase();
     initAdmin1();
     initAdmin2();
@@ -20,13 +30,24 @@ public class AdminUserResource{
 
   }
 
-  public void initAdmin1(){
+  /**
+   * Initiates Admin 1.
+   */
+  private void initAdmin1() {
     this.admin1 = new Admin("ad1", "pw1", null, 6,adminPhotoDatabase);
   }
-  public void initAdmin2(){
+
+  /**
+   * Initiates Admin 1.
+   */
+  private void initAdmin2() {
     this.admin2 = new Admin("ad2", "pw2", photosResource.getUser1photos(), 2,adminPhotoDatabase);
   }
-  public void initAdminPhotosDatabase(){
+
+  /**
+   * Initiates Admin Photos Database.
+   */
+  private void initAdminPhotosDatabase() {
     adminPhotoDatabase = new LinkedList<>();
     adminPhotoDatabase.add(photosResource.getUser1photos());
     adminPhotoDatabase.add(photosResource.getUser2photos());

@@ -1,21 +1,30 @@
 package rest.resources;
 
-import rest.models.Reply;
-
+import java.sql.Timestamp;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.sql.Timestamp;
+import rest.models.Reply;
+
+/**
+ * RepliesResource class which holds all replies resources.
+ */
 @Path("/replies")
 @Singleton
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class RepliesResource {
 
-  Reply reply1, reply2,reply3;
-  public RepliesResource(){
+  Reply reply1;
+  Reply reply2;
+  Reply reply3;
+
+  /**
+   * RepliesResource class constructor.
+   */
+  public RepliesResource() {
     this.reply1 = new Reply("trash photo", new Timestamp(System.currentTimeMillis()), 5, 1);
     this.reply2 = new Reply("great photo", new Timestamp(System.currentTimeMillis()), 3, 8);
     this.reply3 = new Reply("pretty photo", new Timestamp(System.currentTimeMillis()), 4, 2);

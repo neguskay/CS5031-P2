@@ -1,41 +1,59 @@
 package rest.resources;
 
 import com.google.gson.Gson;
-import rest.models.Photo;
-import rest.models.User;
-
+import java.util.LinkedList;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.LinkedList;
+import rest.models.Photo;
+import rest.models.User;
 
+/**
+ * UserResource class holds all users resources.
+ */
 @Path("/users")
 @Singleton
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
 public class UsersResource {
-  Gson gson = new Gson();
-  PhotosResource photos = new PhotosResource();
-  private String newUserName, newUserPassword;
+  private Gson gson = new Gson();
+  private PhotosResource photoResource;
 
-  String user1ID, user1Password;
-  User user1,user2;
-  public UsersResource () {
-    user1ID = "soo";
-    user1Password = "1234";
-    user1 = new User(user1ID, user1Password, new LinkedList<Photo>());
-    user2 = new User("see", "1111", photos.getUser2photos());
+  private String newUserName;
+  private String newUserPassword;
+  private String user1id;
+  private String user1password;
+
+  private User user1;
+  private User user2;
+
+  /**
+   * UserResource Constructor.
+   */
+  public UsersResource() {
+    this.gson = new Gson();
+    this.photoResource = new PhotosResource();
+    user1id = "soo";
+    user1password = "1234";
+    user1 = new User(user1id, user1password, new LinkedList<Photo>());
+    user2 = new User("see", "1111", photoResource.getUser2photos());
   }
+
+  /**
+   * Test method to debug and tests return users while under construction.
+   * @param id User Login ID
+   * @return Json user object as a String of text
+   */
   @GET
   @Path("{id}")
-  public String getMessage(@PathParam("id") String id){
+  public String getMessage(@PathParam("id") String id) {
     Object object = new Object();
     switch (id.toLowerCase()) {
       case "1": object = user1;
       break;
       case "2": object = user2;
       break;
-      default: object =  "ID: "+id+" not supported.";
+      default: object =  "ID: " + id + " not supported.";
       break;
     }
     return gson.toJson(object);

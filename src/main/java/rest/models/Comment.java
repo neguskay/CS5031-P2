@@ -4,22 +4,36 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Comment Class.
+ *
+ */
 public class Comment {
 
-  ArrayList<String> commentID;
+  ArrayList<String> commentid;
   ArrayList<String> comments;
-  ArrayList<String> replyID;
+  ArrayList<String> replyid;
   ArrayList<String> replies;
 
-  private LinkedList<Reply>commentReplies = new LinkedList<>();
+  private LinkedList<Reply> commentReplies = new LinkedList<>();
 
   private String comment;
 
-  private int upVotes,downVotes;
+  private int upVotes;
+  private int downVotes;
 
   private Timestamp commentTimestamp;
 
-  public Comment(String photoComment, LinkedList<Reply> commentReplies, Timestamp commentTimestamp, int upVotes, int downVotes){
+  /**
+   * Comment Class constructor.
+   * @param photoComment Comment being posted
+   * @param commentReplies Replies associated with the above comments
+   * @param commentTimestamp Time at which comment was posted
+   * @param upVotes Likes count for comment
+   * @param downVotes Dislikes count for comment
+   */
+  public Comment(String photoComment, LinkedList<Reply> commentReplies,
+                 Timestamp commentTimestamp, int upVotes, int downVotes) {
     this.comment = photoComment;
     this.commentReplies = commentReplies;
     this.commentTimestamp = commentTimestamp;
@@ -29,20 +43,21 @@ public class Comment {
 
   }
 
-  private void initComments() {
-
-  }
-
-
-  public ArrayList<String> getComments(String photoID) {
+  /**
+   * Method which returns an Array List of type String containing all comments.
+   * @param photoid Name of photo
+   * @return List of comments
+   */
+  public ArrayList<String> getComments(String photoid) {
     return comments;
   }
 
-  public ArrayList<String> getCommentID() {
-    return commentID;
-  }
-
-  public ArrayList<String> getReplies(String commentID) {
+  /**
+   * Parses comment ID returns List of replies.
+   * @param commentid unique id of comment
+   * @return List of replies with associated comment
+   */
+  public ArrayList<String> getReplies(String commentid) {
     replies = new ArrayList<>();
     return replies;
 

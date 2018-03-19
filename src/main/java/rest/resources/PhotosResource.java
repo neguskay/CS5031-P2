@@ -1,26 +1,45 @@
 package rest.resources;
 
-import rest.models.Comment;
-import rest.models.Photo;
-
+import java.util.LinkedList;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.awt.*;
-import java.util.LinkedList;
+import rest.models.Comment;
+import rest.models.Photo;
+
+
+/**
+ * PhotoResource Class which contains all resources of Photos.
+ */
 @Path("/photos")
 @Singleton
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class PhotosResource{
-  CommentsResource comments = new CommentsResource();
-  Photo photo1, photo2, photo3, photo4;
+public class PhotosResource {
+  private CommentsResource comments;
 
-  LinkedList<Comment> photo1Comment, photo2Comment, photo3Comment, photo4Comment;
-  LinkedList<Photo> user1photos = new LinkedList<>();
-  LinkedList<Photo> user2photos = new LinkedList<>();
+  private Photo photo1;
+  private Photo photo2;
+  private Photo photo3;
+  private Photo photo4;
 
-  public PhotosResource(){
+  private LinkedList<Comment> photo1Comment;
+  private LinkedList<Comment> photo2Comment;
+  private LinkedList<Comment> photo3Comment;
+  private LinkedList<Comment> photo4Comment;
+
+  private LinkedList<Photo> user1photos;
+  private LinkedList<Photo> user2photos;
+
+  /**
+   * PhotoResource Constructor.
+   */
+  public PhotosResource() {
+    comments = new CommentsResource();
+
+    user1photos = new LinkedList<>();
+    user2photos = new LinkedList<>();
+
     photo1Comment = new LinkedList<>();
     photo2Comment = new LinkedList<>();
     photo3Comment = new LinkedList<>();
@@ -63,7 +82,6 @@ public class PhotosResource{
     }
     return retPhoto;
   }*/
-
 
   public CommentsResource getComments() {
     return comments;
