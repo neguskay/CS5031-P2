@@ -16,7 +16,7 @@ class AdminResourceTest {
    * Null admin name and null password combinations
    */
   @Test
-  void isAdminValid() {
+  void isAdminValidTest() {
     System.out.println("Test 1: Valid admin name and valid password combination");
     if(adminResource.isAdminValid("ad1", "pw1")) {
       assert true;
@@ -35,7 +35,7 @@ class AdminResourceTest {
     }
   }
   @Test
-  void deleteComments(){
+  void deleteCommentsTest(){
     String deletecomment = "Deleted Comment";
     adminResource.deleteComment("comm 1");
     System.out.println(commentsResource.comment1.getComment());

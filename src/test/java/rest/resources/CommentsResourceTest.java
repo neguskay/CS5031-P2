@@ -6,11 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommentsResourceTest {
   CommentsResource commentsResource = new CommentsResource();
-  @Test
-  void postNewComment() {
 
-  }
-
+  /**
+   * Tests for:
+   * Valid  comment index and reply
+   * Out of bounds index and null reply
+   * Out of bounds  index and validreply
+   * Negative index and reply
+   */
   @Test
   void replyToComment() {
     String reply = "reply test";

@@ -10,7 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class PhotosResourceTest {
   PhotosResource photosResource = new PhotosResource();
 
-
+  /**
+   * Tests for:
+   * Valid valid photoId and comment
+   * Valid invalid photoId and comment
+   * Invalid valid photoId and comment
+   * Null null photoId and comment
+   */
   @Test
   void postCommentTest() {
     System.out.println(photosResource.getPhotoDatabase().toString());

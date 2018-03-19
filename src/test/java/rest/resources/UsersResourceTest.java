@@ -34,9 +34,5 @@ class UsersResourceTest {
     }
   }
 
-  @Test
-  void postComment(){
-
-  }
 
 }
