@@ -26,7 +26,9 @@ public class UsersResource {
 
   private User user1;
   private User user2;
+  private User currentUser;
 
+  private LinkedList<User> users;
   /**
    * UserResource Constructor.
    */
@@ -35,8 +37,17 @@ public class UsersResource {
     this.photoResource = new PhotosResource();
     user1id = "soo";
     user1password = "1234";
-    user1 = new User(user1id, user1password, new LinkedList<Photo>());
-    user2 = new User("see", "1111", photoResource.getUser2photos());
+
+    initUsers();
+  }
+
+  private void initUsers() {
+    this.user1 = new User(user1id, user1password, new LinkedList<Photo>());
+    this.user2 = new User("see", "1111", photoResource.getUser2photos());
+
+    users = new LinkedList<>();
+    users.add(user1);
+    users.add(user2);
   }
 
   /**
@@ -62,4 +73,32 @@ public class UsersResource {
   /*@POST
   @Path("{username}", "{password}")*/
 
+  /**
+   * Authenticates User's login details.
+   * @param userId User name of admin
+   * @param userPass Password of admin
+   * @return boolean i.e. T/F is user's details are correct
+   */
+  @Path("{userId}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean isUserValid(@PathParam("userId") String userId, @QueryParam("pw") String userPass) {
+    boolean isValidUser = false;
+    for(int i = 0; i<users.size(); i++){
+      if (users.get(i).getUserid()==userId){
+        this.currentUser = users.get(i);
+        System.out.println("Found User's Name");
+        if (users.get(i).getUserPassword()==userPass){
+          System.out.println("User Login Verified: Welcome " + users.get(i).getUserid());
+          //Log User In
+          isValidUser = true;
+        }
+        else {
+          System.out.println("User couldn't be verified at this time");
+          isValidUser = false;
+        }
+      }
+    }
+    return isValidUser;
+  }
 }
